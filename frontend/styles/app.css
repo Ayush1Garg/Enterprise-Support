@@ -173,3 +173,11 @@ input {
 .editing {
     background-color: linen;
 }
+
+.userBtns {
+    margin-right: 36px;
+}
+
+.userBtns button {
+    padding: 8px 24px;
+}

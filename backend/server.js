@@ -7,8 +7,8 @@ const docxRoutes = require('./routes/docxRoutes');
 const userRoutes = require('./routes/userRoutes.js');
 
 const app = express();
-const port = process.env.PORT || 3000;
-// const BACKEND_URL = process.env.BACKEND_URL || "";
+const port = process.env.PORT || 5000;
+// const BACKEND_URL = process.env.BACKEND_URL || "";w
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use('/', panelRoutes);
@@ -23,5 +23,5 @@ app.get('/', (req, res) => {
 });
 
 app.listen(port, () => {
-    console.log(`Server running on http://localhost:${port}`);
+    console.log(`Server running on PORT: ${port}`);
 });
