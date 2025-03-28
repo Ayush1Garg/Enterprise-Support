@@ -181,7 +181,7 @@ panelCapacity.addEventListener("change", async function () {
 
     if (panelCapacity.value) {
         enableField(inverterBrand);
-        await fetchOptions("/invBrandsBasedOnPanelBrands", { panelBrand: panelBrand.value, isDCR: isDCR.value }, inverterBrand);
+        await fetchOptions("/allInverterBrands", {}, inverterBrand);
     }
 });
 
