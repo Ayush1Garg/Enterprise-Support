@@ -82,12 +82,13 @@ button {
 header {
     position: sticky;
     top: 0px;
+    /* height: 17vh; */
     background-color: aliceblue;
 }
 
 section {
     margin-bottom: 16px;
-    height: 500px;
+    height: 75vh;
     width: 99vw;
     overflow-y: scroll;
 }

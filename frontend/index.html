@@ -41,16 +41,23 @@
             Click on any task to start
         </h2>
     </div>
+    <div id="loading-overlay" class="hidden">
+        <div id="spinner"></div>
+        <p>Generating Document... Please wait.</p>
+    </div>
     <section class="removed" id="documentGenerator">
-        <div id="loading-overlay" class="hidden">
-            <div id="spinner"></div>
-            <p>Generating Document... Please wait.</p>
-        </div>
         <div class="container">
             <div class="text-center">
                 <h3>Certificate Generator</h3>
             </div>
             <form id="docxForm">
+                <div class="mb-3 form-group">
+                    <label for="vendorName">Select Vendor: </label>
+                    <select name="vendorName" id="vendorName" class="form-control form-select">
+                        <option value="Mamta Enterprises">Mamta Enterprises</option>
+                        <option value="ND Techno Solutions">ND Techno Solutions</option>
+                    </select>
+                </div>
                 <div class="mb-3 form-group">
                     <label for="inverter_capacity">
                         Inverter Capacity
@@ -79,26 +86,23 @@
                 </div>
                 <div class="mb-3 form-group">
                     <label for="invoice_number">
-                        Invoice Number
-                        (ME/2024-25/XXX)
+                        Invoice Number (ME/2025-26/XXX)
                     </label>
                     <input type="text" name="invoice_number" class="form-control" required>
                 </div>
                 <div class="mb-3 form-group">
                     <label for="consumer_name">Consumer Name</label>
-                    <input type="text" name="consumer_name" class="form-control" required>
+                    <input type="text" id="consumerName" name="consumer_name" class="form-control" required>
                 </div>
                 <div class="mb-3 form-group">
                     <label for="consumer_address">
-                        Consumer
-                        Address
+                        Consumer Address
                     </label>
-                    <textarea name="consumer_address" class="form-control"></textarea>
+                    <textarea name="consumer_address" id="consumerAddress" class="form-control"></textarea>
                 </div>
                 <div class="mb-3 form-group">
                     <label for="net_solar_capacity">
-                        Net Solar Capacity
-                        (KW)
+                        Net Solar Capacity (KW)
                     </label>
                     <input type="text" name="net_solar_capacity" class="form-control" required>
                 </div>
@@ -111,6 +115,8 @@
                     <input type="text" name="serial_numbers" class="form-control">
                 </div>
                 <button type="submit" class="btn btn-primary w-100">Generate Document</button>
+                <button type="button" class="btn btn-primary w-100" id="AgreementGeneratorBtn">Generate Model
+                    Agreement</button>
             </form>
         </div>
     </section>
@@ -529,7 +535,6 @@
     <script src="scripts/docxGeneratorScript.js"></script>
     <script src="scripts/inverterTable.js"></script>
     <script src="scripts/panelTable.js"></script>
-    <!-- <script src="scripts/panelInverterCombinationTable.js"></script> -->
     <script src="scripts/erectionComissioning.js"></script>
 </body>
 
