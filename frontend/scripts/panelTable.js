@@ -52,7 +52,7 @@ panelTableBody.addEventListener('click', async (event) => {
         const id = row.getAttribute('data-index');
         row.style.backgroundColor = "gray";
         if (confirm("Are you sure you want to delete this record ?")) {
-            const response = await fetch(`/deletePanelCapacityVariant?id=${id}`, {
+            const response = await fetch(`${CONFIG.BACKEND_URL}/deletePanelCapacityVariant?id=${id}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
@@ -81,7 +81,7 @@ panelTableBody.addEventListener('click', async (event) => {
                 alert("Invalid price format");
                 return;
             }
-            const response = await fetch(`/updatePriceOfExistingPanelCapacityVariant?id=${id}`, {
+            const response = await fetch(`${CONFIG.BACKEND_URL}/updatePriceOfExistingPanelCapacityVariant?id=${id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -207,7 +207,7 @@ panelModalSubmit.addEventListener('click', async () => {
             return;
         }
         const isDCR = panelBrandFormData.dcrStatus == "true";
-        const panelBrandListResult = await fetch(`/getPanelBrandsTable`, {
+        const panelBrandListResult = await fetch(`${CONFIG.BACKEND_URL}/getPanelBrandsTable`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -219,7 +219,7 @@ panelModalSubmit.addEventListener('click', async () => {
         // const newPanelBrandList = panelBrandList.map(brand => brand.toLowerCase());
         const matchingPanelList = panelBrandList.filter(panel => panel.panelBrand.toLowerCase() == brandName.toLowerCase() && panel.isDCR == isDCR)
         if (matchingPanelList.length == 0) {
-            const response = await fetch(`/addPanelBrand`, {
+            const response = await fetch(`${CONFIG.BACKEND_URL}/addPanelBrand`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -247,7 +247,7 @@ panelModalSubmit.addEventListener('click', async () => {
         };
         // console.log(requestBody);
         // console.log('Posting Data')
-        const response = await fetch('/addCapacityVariantToExistingPanelBrand', {
+        const response = await fetch(`${CONFIG.BACKEND_URL}/addCapacityVariantToExistingPanelBrand`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -276,7 +276,7 @@ panelModal.addEventListener('hide.bs.modal', function () {
 });
 
 async function populatePanelBrands() {
-    const panelBrandListResult = await fetch(`/getPanelBrandsTable`);
+    const panelBrandListResult = await fetch(`${CONFIG.BACKEND_URL}/getPanelBrandsTable`);
     const panelBrandList = await panelBrandListResult.json();
     panelBrandSelect.innerHTML = `<option value="" selected disabled> Select Panel Brand </option>`;
     panelBrandList.forEach(brand => {
@@ -299,7 +299,7 @@ document.addEventListener('DOMContentLoaded', async function () {
                 capacityInput.addEventListener('change', async () => {
                     // console.log('Capacity Changed');
                     const capacity = capacityInput.value;
-                    const availableCapacitiesResult = await fetch(`/getAllCapacitesAsPerPanelBrandId?id=${panelBrandSelect.value}`);
+                    const availableCapacitiesResult = await fetch(`${CONFIG.BACKEND_URL}/getAllCapacitesAsPerPanelBrandId?id=${panelBrandSelect.value}`);
                     const availableCapacities = await availableCapacitiesResult.json();
 
                     if (availableCapacities.includes(capacity)) {

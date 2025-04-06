@@ -8,58 +8,6 @@ flatpickr("#invoice_date", {
     maxDate: new Date()
 });
 
-AgreementGeneratorBtn.addEventListener('click', async (event) => {
-    event.preventDefault();
-    const vendorName = document.getElementById('vendorName');
-    if (vendorName.value == "") {
-        alert("Please select a vendor");
-        return;
-    }
-    const consumer_name = document.getElementById('consumerName');
-    const consumer_address = document.getElementById('consumerAddress');
-    if (consumer_name.value == "" || consumer_address.value == "") {
-        alert("Both Consumer Name and Address Feild are required");
-        return;
-    }
-    document.body.classList.add('loading');
-    document.getElementById('loading-overlay').classList.remove('hidden');
-    document.getElementById('loading-overlay').classList.add('loading-overlay');
-    document.getElementById('spinner').classList.add('loading-spinner');
-    fetch('/generateModelAgreement', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ consumer_name: consumer_name.value, consumer_address: consumer_address.value, vendorName: vendorName.value })
-    })
-        .then(response => response.json())
-        .then(data => {
-            if (!data.previewLink) {
-                // console.error("❌ No download link received from backend");
-                return;
-            }
-
-            const docxUrl = data.previewLink;
-            const newTab = window.open(docxUrl, "_blank");
-
-            if (newTab) {
-                newTab.focus();
-            } else {
-                alert("Please allow pop-ups to preview the Document.");
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert("Error generating Document. Try again.");
-        })
-        .finally(() => {
-            document.body.classList.remove('loading');
-            document.getElementById('loading-overlay').classList.add('hidden');
-            document.getElementById('loading-overlay').classList.remove('loading-overlay');
-            document.getElementById('spinner').classList.remove('loading-spinner');
-        });
-})
-
 docxForm.addEventListener('submit', function (event) {
     event.preventDefault();
 
@@ -94,7 +42,6 @@ docxForm.addEventListener('submit', function (event) {
         })
         .then(data => {
             if (!data.previewLink) {
-                // console.error("❌ No download link received from backend");
                 return;
             }
 
@@ -117,6 +64,5 @@ docxForm.addEventListener('submit', function (event) {
             document.getElementById('loading-overlay').classList.add('hidden');
             document.getElementById('loading-overlay').classList.remove('loading-overlay');
             document.getElementById('spinner').classList.remove('loading-spinner');
-            // console.log(`${CONFIG.BACKEND_URL}/generate-file`);
         });
 });

@@ -26,6 +26,9 @@
                 <button type="button" class="toggler btn btn-primary" id="sectionThreeToggler">
                     View/Update Stock Pricings
                 </button>
+                <button type="button" class="toggler btn btn-primary" id="sectionFourToggler">
+                    Generate Model Agreement
+                </button>
             </div>
             <div style="display: inline-block;" class="tabs userBtns">
                 <button type="button" id="loginBtn" class="btn btn-success">Sign In</button>
@@ -92,13 +95,13 @@
                 </div>
                 <div class="mb-3 form-group">
                     <label for="consumer_name">Consumer Name</label>
-                    <input type="text" id="consumerName" name="consumer_name" class="form-control" required>
+                    <input type="text" name="consumer_name" class="form-control" required>
                 </div>
                 <div class="mb-3 form-group">
                     <label for="consumer_address">
                         Consumer Address
                     </label>
-                    <textarea name="consumer_address" id="consumerAddress" class="form-control"></textarea>
+                    <textarea name="consumer_address" class="form-control"></textarea>
                 </div>
                 <div class="mb-3 form-group">
                     <label for="net_solar_capacity">
@@ -115,8 +118,6 @@
                     <input type="text" name="serial_numbers" class="form-control">
                 </div>
                 <button type="submit" class="btn btn-primary w-100">Generate Document</button>
-                <button type="button" class="btn btn-primary w-100" id="AgreementGeneratorBtn">Generate Model
-                    Agreement</button>
             </form>
         </div>
     </section>
@@ -513,9 +514,47 @@
             </div>
         </div>
     </section>
+    <section class="removed" id="modelAgreementGenerator">
+        <div class="container">
+            <div class="text-center">
+                <h3>Model Agreement Generator</h3>
+            </div>
+            <form action="" id="modelAgreementForm">
+                <div class="mb-3 form-group">
+                    <label for="vendorSelect">Select Vendor: </label>
+                    <select name="vendorSelect" id="vendorSelect" class="form-control form-select">
+                        <option value="Mamta Enterprises">Mamta Enterprises</option>
+                        <option value="ND Techno Solutions">ND Techno Solutions</option>
+                    </select>
+                </div>
+                <div class="mb-3 form-group">
+                    <label for="customer_name">Customer Name: </label>
+                    <input type="text" name="customer_name" id="customer_name" class="form-control" required>
+                </div>
+                <div class="mb-3 form-group">
+                    <label for="customer_address">Customer Address: </label>
+                    <textarea name="customer_address" id="customer_address" class="form-control" required></textarea>
+                </div>
+                <!-- <div>
+                    <label for="signed">Make signed Agreement</label>
+                    <input type="checkbox" name="signed" id="signed" class="">
+                </div>
+                <div class="mb-3 form-group">
+                    <label for="customer_sign">Customer Signature: </label>
+                    <input type="file" name="customer_sign" id="customer_sign" class="form-control" disabled
+                        accept="image/*">
+                    <div id="file-actions" class="mt-2" style="display: none;">
+                        <button type="button" id="viewFile" class="btn btn-info me-2">View</button>
+                        <button type="button" id="deleteFile" class="btn btn-danger">Delete</button>
+                    </div>
+                </div> -->
+                <button type="submit" class="btn btn-primary w-100">Generate Document</button>
+            </form>
+        </div>
+    </section>
     <script>
         const getTableData = async (api) => {
-            const response = await fetch(api, {
+            const response = await fetch(`${CONFIG.BACKEND_URL}${api}`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json"
@@ -533,6 +572,7 @@
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="config/config.js"></script>
     <script src="scripts/docxGeneratorScript.js"></script>
+    <script src="scripts/modelAgreementGenerator.js"></script>
     <script src="scripts/inverterTable.js"></script>
     <script src="scripts/panelTable.js"></script>
     <script src="scripts/erectionComissioning.js"></script>

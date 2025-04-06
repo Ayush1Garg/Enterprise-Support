@@ -1,11 +1,15 @@
 const sectionOneToggler = document.getElementById('sectionOneToggler');
 const sectionTwoToggler = document.getElementById('sectionTwoToggler');
 const sectionThreeToggler = document.getElementById('sectionThreeToggler');
+const sectionFourToggler = document.getElementById('sectionFourToggler');
+const sectionOne = document.getElementById('documentGenerator');
+const sectionTwo = document.getElementById('estimateCalculator');
+const sectionThree = document.getElementById('tableViewer');
+const sectionFour = document.getElementById('modelAgreementGenerator');
 const loginBtn = document.getElementById('loginBtn');
 const logoutBtn = document.getElementById('logoutBtn');
 const emptyBody = document.getElementById('emptyBody')
 
-let currentSection = "";
 let loggedIn = false;
 loginBtn.addEventListener('click', async () => {
     const status = await authenticate();
@@ -19,49 +23,55 @@ loginBtn.addEventListener('click', async () => {
     }
 })
 
-
 sectionOneToggler.addEventListener("click", () => {
-    document.getElementById('tableViewer').classList.add("removed");
-    document.getElementById('documentGenerator').classList.remove("removed");
-    document.getElementById('estimateCalculator').classList.add("removed");
+    sectionOne.classList.remove("removed");
+    sectionTwo.classList.add("removed");
+    sectionThree.classList.add("removed");
+    sectionFour.classList.add("removed");
     emptyBody.remove();
+    sectionOneToggler.classList.add("active");
     sectionTwoToggler.classList.remove("active");
     sectionThreeToggler.classList.remove("active");
-    sectionOneToggler.classList.add("active");
-    currentSection = "documentGenerator";
+    sectionFourToggler.classList.remove("active");
 })
 sectionTwoToggler.addEventListener("click", async () => {
     let status = await authenticate();
     if (status == "success") {
-        document.getElementById('documentGenerator').classList.add("removed");
-        document.getElementById('tableViewer').classList.add("removed");
-        document.getElementById('estimateCalculator').classList.remove("removed");
+        sectionOne.classList.add("removed");
+        sectionTwo.classList.remove("removed");
+        sectionThree.classList.add("removed");
+        sectionFour.classList.add("removed");
         emptyBody.remove();
         sectionOneToggler.classList.remove("active");
-        sectionThreeToggler.classList.remove("active");
         sectionTwoToggler.classList.add("active");
-        // resetEstimator();
-        currentSection = "estimateCalculator";
-    } else {
-        alert("Authentication failed");
+        sectionThreeToggler.classList.remove("active");
+        sectionFourToggler.classList.remove("active");
     }
 })
 sectionThreeToggler.addEventListener("click", async () => {
     let status = await authenticate();
     if (status == "success") {
-        document.getElementById('documentGenerator').classList.add("removed");
-        document.getElementById('estimateCalculator').classList.add("removed");
-        document.getElementById('tableViewer').classList.remove("removed");
+        sectionOne.classList.add("removed");
+        sectionTwo.classList.add("removed");
+        sectionThree.classList.remove("removed");
+        sectionFour.classList.add("removed");
         emptyBody.remove();
         sectionOneToggler.classList.remove("active");
-        sectionThreeToggler.classList.add("active");
         sectionTwoToggler.classList.remove("active");
-        // resetEstimator();
-        currentSection = "tableViewer"
-    } else {
-        alert("Authentication failed");
+        sectionThreeToggler.classList.add("active");
+        sectionFourToggler.classList.remove("active");
     }
-    // alert("In Progress");
+})
+sectionFourToggler.addEventListener('click', async () => {
+    sectionOne.classList.add("removed");
+    sectionTwo.classList.add("removed");
+    sectionThree.classList.add("removed");
+    sectionFour.classList.remove("removed");
+    emptyBody.remove();
+    sectionOneToggler.classList.remove("active");
+    sectionTwoToggler.classList.remove("active");
+    sectionThreeToggler.classList.remove("active");
+    sectionFourToggler.classList.add("active");
 })
 
 const authenticate = async () => {
@@ -81,7 +91,7 @@ const authenticate = async () => {
     };
     try {
         if (!user_name || !passkey) return;
-        let response = await fetch(`/login?user_name=${user_name}&passkey=${passkey}`, {
+        let response = await fetch(`${CONFIG.BACKEND_URL}/login?user_name=${user_name}&passkey=${passkey}`, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' }
         })
@@ -96,6 +106,9 @@ const authenticate = async () => {
         }
     } catch (err) {
         console.error(err);
+    }
+    if (status != "success") {
+        alert("Authentication Failed");
     }
     return status;
 }

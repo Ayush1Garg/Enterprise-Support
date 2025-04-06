@@ -86,7 +86,7 @@ ErectionCommissioningCostTable.addEventListener('click', async (event) => {
             return;
         }
         // console.log(requestBody);
-        const response = await fetch(`/updateEncCost?id=${id}`, {
+        const response = await fetch(`${CONFIG.BACKEND_URL}/updateEncCost?id=${id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -114,7 +114,7 @@ ErectionCommissioningCostTable.addEventListener('click', async (event) => {
         const row = event.target.parentNode.parentNode;
         const id = row.getAttribute('data-index');
         if (confirm("Are you sure you want to  delete this record")) {
-            // const response = await fetch(`/deleteEncCost?id=${id}`, {
+            // const response = await fetch(`${CONFIG.BACKEND_URL}/deleteEncCost?id=${id}`, {
             //     method: 'DELETE',
             // })
             // if (response.ok) {

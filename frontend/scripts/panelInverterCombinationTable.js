@@ -29,13 +29,11 @@ panelInverterCombinationModalSubmit.addEventListener('click', async () => {
         alert("Please select both inverter and panel brands");
         return;
     }
-    return
-    // else 
     {
-        console.log(formData);
+        // console.log(formData);
         const inverterBrandId = formData.InverterBrandId;
         const panelBrandId = formData.PanelBrandId;
-        const matchingRecordIdsResults = await fetch(`/checkPanelInverterCombinationPresence?InverterBrandId=${inverterBrandId}&panelBrandId=${panelBrandId}`)
+        const matchingRecordIdsResults = await fetch(`${CONFIG.BACKEND_URL}/checkPanelInverterCombinationPresence?InverterBrandId=${inverterBrandId}&panelBrandId=${panelBrandId}`)
         const matchingRecordIds = await matchingRecordIdsResults.json();
         if (matchingRecordIds.length > 0) {
             console.log("Inverter and panel combination already exists");
@@ -45,7 +43,7 @@ panelInverterCombinationModalSubmit.addEventListener('click', async () => {
                 "panelBrandId": panelBrandId
             }
             console.log(requestBody);
-            const response = await fetch('/addInverterPanelCombination', {
+            const response = await fetch(`${CONFIG.BACKEND_URL}/addInverterPanelCombination`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -111,7 +109,7 @@ panelInverterCombinationTable.addEventListener('click', async (event) => {
         const id = row.getAttribute('data-index');
         row.style.backgroundColor = "gray";
         if (confirm("Are you sure you want to delete this record ?")) {
-            const response = await fetch(`/deleteInverterPanelCombination?id=${id}`, {
+            const response = await fetch(`${CONFIG.BACKEND_URL}/deleteInverterPanelCombination?id=${id}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',

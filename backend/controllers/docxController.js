@@ -60,11 +60,11 @@ const generateFile = async (req, res) => {
 }
 
 const generateModelAgreement = async (req, res) => {
-    const { vendorName, consumer_name, consumer_address } = req.body;
+    const { vendorSelect, customer_name, customer_address } = req.body;
     let vendor_address = "";
-    if (vendorName == "Mamta Enterprises") {
+    if (vendorSelect == "Mamta Enterprises") {
         vendor_address = "Near BOI, Jind Road, Kaithal"
-    } else if (vendorName == "ND Techno Solutions") {
+    } else if (vendorSelect == "ND Techno Solutions") {
         vendor_address = "Sector-19, HUDA, Kaithal"
     }
     const template = "ModelAgreement";
@@ -81,9 +81,9 @@ const generateModelAgreement = async (req, res) => {
         const doc = new docxtemplater(zip);
 
         doc.render({
-            consumer_name: consumer_name,
-            consumer_address: consumer_address,
-            vendor_name: vendorName,
+            consumer_name: customer_name,
+            consumer_address: customer_address,
+            vendor_name: vendorSelect,
             vendor_address: vendor_address
 
         });

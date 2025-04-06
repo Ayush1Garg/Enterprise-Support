@@ -77,7 +77,7 @@ async function completeSheet(EncDetails) {
     netCosting.innerText = ((wholeInfo.netCost) / wholeInfo.total_capacity).toFixed(2);
 }
 async function getInverterCost() {
-    const response = await fetch(`/inverterCostBasedOnInverterBrandAndCapacity?inverterBrand=${inverterBrand.value}&inverterCapacity=${inverterCapacity.value}`, {
+    const response = await fetch(`${CONFIG.BACKEND_URL}/inverterCostBasedOnInverterBrandAndCapacity?inverterBrand=${inverterBrand.value}&inverterCapacity=${inverterCapacity.value}`, {
         method: 'GET',
         headers: {
             "Content-Type": "application/json"
@@ -91,7 +91,7 @@ async function getInverterCost() {
     return fetchedDetails;
 }
 async function getPanelCost() {
-    const response = await fetch(`/panel_cost?isDCR=${isDCR.value}&panelBrand=${panelBrand.value}&capacity_variant=${panelCapacity.value}`, {
+    const response = await fetch(`${CONFIG.BACKEND_URL}/panel_cost?isDCR=${isDCR.value}&panelBrand=${panelBrand.value}&capacity_variant=${panelCapacity.value}`, {
         method: 'GET',
         headers: {
             "Content-Type": "application/json"
@@ -140,14 +140,14 @@ function enableField(field) {
 async function fetchOptions(url, params, field) {
     try {
         const queryString = new URLSearchParams(params).toString();
-        const response = await fetch(`${url}?${queryString}`);
+        const response = await fetch(`${CONFIG.BACKEND_URL}${url}?${queryString}`);
         const data = await response.json();
         field.innerHTML = `<option value="" selected disabled>-- Select --</option>`;
         data.forEach(item => {
             field.innerHTML += `<option value="${item}">${item}</option>`;
         });
     } catch (error) {
-        console.error(`Error fetching ${url}:`, error);
+        console.error(`Error fetching ${CONFIG.BACKEND_URL}${url}:`, error);
     }
 }
 
@@ -215,7 +215,7 @@ submitButton.addEventListener("click", async function (event) {
     const id = totalCapacity > 5000 ? 2 : 1;
 
     try {
-        let response = await fetch(`/erection_and_commissioning_cost?id=${id}`, {
+        let response = await fetch(`${CONFIG.BACKEND_URL}/erection_and_commissioning_cost?id=${id}`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json"

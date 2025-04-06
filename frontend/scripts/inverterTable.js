@@ -51,7 +51,7 @@ inverterTableBody.addEventListener('click', async (event) => {
         const id = row.getAttribute('data-index');
         row.style.backgroundColor = "gray";
         if (confirm("Are you sure you want to delete this record ?")) {
-            const response = await fetch(`/deleteInverterCapacityVariant?id=${id}`, {
+            const response = await fetch(`${CONFIG.BACKEND_URL}/deleteInverterCapacityVariant?id=${id}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
@@ -80,7 +80,7 @@ inverterTableBody.addEventListener('click', async (event) => {
                 alert("Invalid price format");
                 return;
             }
-            const response = await fetch(`/updatePriceOfExistingInverter?id=${id}`, {
+            const response = await fetch(`${CONFIG.BACKEND_URL}/updatePriceOfExistingInverter?id=${id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -202,7 +202,7 @@ inverterModalSubmit.addEventListener('click', async () => {
     console.log("Form Submt attempted");
     if (selectedInverterForm == inverterBrandForm) {
         const brandName = Object.fromEntries(new FormData(inverterBrandForm)).newInverterBrandName;
-        const inverterBrandListResult = await fetch(`/allInverterBrands`, {
+        const inverterBrandListResult = await fetch(`${CONFIG.BACKEND_URL}/allInverterBrands`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -212,7 +212,7 @@ inverterModalSubmit.addEventListener('click', async () => {
         // console.log(inverterBrandList);
         const newInverterBrandList = inverterBrandList.map(brand => brand.toLowerCase());
         if (!newInverterBrandList.includes(brandName.toLowerCase())) {
-            const response = await fetch(`addInverterBrands`, {
+            const response = await fetch(`${CONFIG.BACKEND_URL}/addInverterBrands`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -240,7 +240,7 @@ inverterModalSubmit.addEventListener('click', async () => {
         };
         // console.log(requestBody);
         // console.log('Posting Data')
-        const response = await fetch('/addCapacityVariantToExistingInverterBrand', {
+        const response = await fetch(`${CONFIG.BACKEND_URL}/addCapacityVariantToExistingInverterBrand`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -269,7 +269,7 @@ inverterModal.addEventListener('hide.bs.modal', function () {
 });
 
 async function populateInverterBrands() {
-    const inverterBrandListResult = await fetch(`/allInverterBrands`);
+    const inverterBrandListResult = await fetch(`${CONFIG.BACKEND_URL}/allInverterBrands`);
     const inverterBrandList = await inverterBrandListResult.json();
     inverterBrandSelect.innerHTML = `<option value="" selected disabled> Select Inverter Brand </option>`;
     inverterBrandList.forEach(brandName => {
@@ -292,7 +292,7 @@ document.addEventListener('DOMContentLoaded', async function () {
                 capacityInput.addEventListener('change', async () => {
                     // console.log('Capacity Change Attempted');
                     const capacity = capacityInput.value;
-                    const availableCapacitiesResult = await fetch(`/getAllCapacitesAsPerInverterBrand?name=${inverterBrandSelect.value}`);
+                    const availableCapacitiesResult = await fetch(`${CONFIG.BACKEND_URL}/getAllCapacitesAsPerInverterBrand?name=${inverterBrandSelect.value}`);
                     const availableCapacities = await availableCapacitiesResult.json();
 
                     if (availableCapacities.includes(capacity)) {
