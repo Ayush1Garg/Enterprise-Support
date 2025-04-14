@@ -45,13 +45,13 @@ const modelAgreementForm = document.getElementById('modelAgreementForm');
 
 modelAgreementForm.addEventListener('submit', function (event) {
     event.preventDefault();
-    if (signedCheckbox.checked) {
-        const file = customerSignInput.files[0];
-        if (!file) {
-            alert("No Signature uploaded. Please Upload valid Sign");
-            return;
-        }
-    }
+    // if (signedCheckbox.checked) {
+    //     const file = customerSignInput.files[0];
+    //     if (!file) {
+    //         alert("No Signature uploaded. Please Upload valid Sign");
+    //         return;
+    //     }
+    // }
     document.body.classList.add('loading');
     document.getElementById('loading-overlay').classList.remove('hidden');
     document.getElementById('loading-overlay').classList.add('loading-overlay');
