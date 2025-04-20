@@ -1,7 +1,8 @@
 const quotationForm = document.getElementById("QuotationForm");
 const vendorSelect = document.getElementById("vendorSelect");
 const quotationFormBody = document.getElementById("quotationFormBody");
-const specificFields = document.getElementById("ND-specific-fields");
+const NDspecificFields = document.getElementById("ND-specific-fields");
+const MamtaSpecificFields = document.getElementById("Mamta-specific-fields");
 
 vendorSelect.addEventListener("change", function() {
     const selected = vendorSelect.value;
@@ -11,11 +12,14 @@ vendorSelect.addEventListener("change", function() {
     else{
         quotationFormBody.classList.remove("removed");
         if(selected == "ND Techno Solutions"){
-            specificFields.classList.remove("removed");
-            document.querySelector('select').forEach(select => select.required = true);
+            NDspecificFields.classList.remove("removed");
+            MamtaSpecificFields.classList.add("removed");
+        }else if(selected =="Mamta Enterprises"){
+            MamtaSpecificFields.classList.add("removed");
+            NDspecificFields.classList.add("removed");
         }else{
-            specificFields.classList.add("removed");
-            document.querySelector('select').forEach(select => select.required = false);
+            NDspecificFields.classList.add("removed");
+            MamtaSpecificFields.classList.add("removed");
         }
     }
 });
