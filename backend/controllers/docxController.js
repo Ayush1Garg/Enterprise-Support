@@ -59,42 +59,6 @@ const generateFile = async (req, res) => {
     });
 }
 
-const generateModelAgreement = async (req, res) => {
-    const { vendorSelect, customer_name, customer_address } = req.body;
-    let vendor_address = "";
-    if (vendorSelect == "Mamta Enterprises") {
-        vendor_address = "Near BOI, Jind Road, Kaithal"
-    } else if (vendorSelect == "ND Techno Solutions") {
-        vendor_address = "Sector-19, HUDA, Kaithal"
-    }
-    const template = "ModelAgreement";
-    const wordTemplate = template + ".docx";
-    const templatesDir = path.join(__dirname, '../templates');
-    const templatePath = path.join(templatesDir, wordTemplate);
-    if (!fs.existsSync(templatePath)) {
-        return res.status(404).send("Template not found.");
-    }
-    fs.readFile(templatePath, 'binary', (err, data) => {
-        if (err) return res.status(500).send("Error reading template file.");
-
-        const zip = new PizZip(data);
-        const doc = new docxtemplater(zip);
-
-        doc.render({
-            consumer_name: customer_name,
-            consumer_address: customer_address,
-            vendor_name: vendorSelect,
-            vendor_address: vendor_address
-
-        });
-
-        const docxPath = path.join(outputDir, wordTemplate);
-        fs.writeFileSync(docxPath, doc.getZip().generate({ type: 'nodebuffer' }));
-        res.setHeader("Content-Type", "application/json");
-        res.json({ previewLink: `/preview?file=${encodeURIComponent(wordTemplate)}&type=docx` });
-    })
-}
-
 const previewFile = async (req, res) => {
     const filename = req.query.file;
     const fileType = req.query.type;
@@ -115,4 +79,61 @@ const previewFile = async (req, res) => {
     fs.createReadStream(filePath).pipe(res);
 }
 
-module.exports = { generateFile, previewFile, generateModelAgreement };
+const generateQuotation = async (req, res) => {
+    const vendorName = req.body.vendorName;
+    if(vendorName == "Mamta Enterprises"){
+        return await makeMamtaQuotation(req,res);
+    }else if(vendorName == "ND Techno Solutions"){
+        return await makeNDTechnoQuotation(req,res);
+    }else{
+        return res.status(400).send("Invalid vendorName.");
+    }
+}
+
+const makeMamtaQuotation = async (req,res) => {
+    return res.status(200).send("Mamta Enterprises");
+}
+
+const makeNDTechnoQuotation = async (req,res) => {
+    const {inverterCapacity, inverterBrandName, panelCapacity, panelBrandName, panelType,
+        noOfPanels, connectionType, roofType, connectedLoad, netCapacity, phase,
+        netCost, contactEmail, contactNo, customerName, } = req.body;
+    const units = netCapacity*1350, baseCost = Math.floor(netCost/1.12), tax = netCost - baseCost;
+    const templatesDir = path.join(__dirname, '../templates');
+    const wordTemplate = "ND Techno Solutions Quotation.docx"
+    const templatePath = path.join(templatesDir, wordTemplate);
+    if (!fs.existsSync(templatePath)) {
+        return res.status(404).send("Template not found.");
+    }
+    fs.readFile(templatePath, 'binary', (err, data) => {
+        if (err) return res.status(500).send("Error reading template file.");
+        const zip = new PizZip(data);
+        const doc = new docxtemplater(zip);
+        doc.render({
+            inverterCapacity: inverterCapacity, //
+            inverterBrand: inverterBrandName, //
+            panelCapacity: panelCapacity, //
+            panelBrand: panelBrandName, //
+            panelType: panelType, //
+            NoOfPanels: noOfPanels, //
+            connectionType: connectionType, //
+            roofType: roofType, //
+            connectedLoad: connectedLoad, //
+            netCapacity: netCapacity, //
+            contactEmail: contactEmail, //
+            contactNo: contactNo, //
+            customerName: customerName, //
+            phase: phase, //
+            netCost: netCost,
+            units: units, //
+            baseCost: baseCost, //
+            tax: tax, //
+        });
+        const docxPath = path.join(outputDir, wordTemplate);
+        fs.writeFileSync(docxPath, doc.getZip().generate({ type: 'nodebuffer' }));
+        res.setHeader("Content-Type", "application/json");
+        res.json({ previewLink: `/preview?file=${encodeURIComponent(wordTemplate)}&type=docx` });
+    });
+}
+
+module.exports = { generateFile, previewFile, generateQuotation };

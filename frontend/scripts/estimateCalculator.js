@@ -27,7 +27,6 @@ let wholeInfo = {
     "profit": 0,
 }
 const resetEstimator = () => {
-    // Clear all input fields
     isDCR.value = "";
     panelBrand.value = "";
     panelCapacity.value = "";
@@ -42,10 +41,6 @@ const resetEstimator = () => {
     quotationPrice.value = "";
     netQuotedPrice.innerText = "";
     profit.innerText = "";
-    // calculateProfitBtn.value = "";
-    // Reset the form to its initial state
-    // document.getElementById("panelForm").reset();
-    // Reset the wholeInfo object
     wholeInfo = {
         "panelPerWattCost": 0,
         "inverterCost": 0,
@@ -63,7 +58,6 @@ document.documentElement.scrollTop = 0;
 isDCR.value = "";
 
 async function completeSheet(EncDetails) {
-    // console.log("collecting data and completing sheet")
     wholeInfo.panelPerWattCost = await getPanelCost();
     wholeInfo.inverterCost = await getInverterCost();
     wholeInfo.total_capacity = panelCapacity.value * totalPlates.value;

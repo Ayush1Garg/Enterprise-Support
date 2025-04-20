@@ -27,7 +27,7 @@
                     View/Update Stock Pricings
                 </button>
                 <button type="button" class="toggler btn btn-primary" id="sectionFourToggler">
-                    Generate Model Agreement
+                    Generate Quotation
                 </button>
             </div>
             <div style="display: inline-block;" class="tabs userBtns">
@@ -126,7 +126,7 @@
             <h3>Pricing Estimator</h3>
             <!-- <button type="button" class="btn btn-primary w-30" id="docx-form-reset-btn">Reset Data</button> -->
         </div>
-        <div class="conatiner">
+        <div class="container">
             <form action="" id="panelForm" class="panelContainer">
                 <div class="mb-3 form-group">
                     <label for="isDCR">Is DCR:</label>
@@ -256,7 +256,7 @@
                                 <form action="" id="panelBrandForm" class="removed">
                                     <div class="form-group md-3">
                                         <label>Panel Brand:</label>
-                                        <input type="text" name="newPanelBrand" id="newPanelBrand" class="form-control"
+                                        <input type="text" name="newPanelBrand" id="addNewPanelBrand" class="form-control"
                                             placeholder="Enter New Panel Brand">
                                     </div>
                                     <div class="form-group md-3">
@@ -420,72 +420,6 @@
                 </table>
             </div>
         </div>
-        <!-- <div class="tableContainer">
-            <div class="heading">
-                <h4>Panel Inverter Combination</h4>
-                <button type="button" class="btn btn-primary addPanelInverterCombinationBtn" data-bs-toggle="modal"
-                    data-bs-target="#panelInverterCombinationModal">
-                    Add Panel Inverter Combination
-                </button>
-                <div class="modal fade" id="panelInverterCombinationModal" tabindex="-1"
-                    aria-labelledby="panelInverterCombinationModalLabel" aria-hidden="true" data-bs-backdrop="static"
-                    data-bs-keyboard="false">
-                    <div class="modal-dialog modal-lg modal-dialog-scrollable">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="panelInverterCombinationModalLabel">
-                                    Add Inveter Panel Combination
-                                </h1>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <form action="" id="panelInverterCombinationForm">
-                                    <div class="mb-3 form-group">
-                                        <label for="PanelBrandId">
-                                            Panel Brand:
-                                        </label>
-                                        <select name="PanelBrandId" id="PanelBrandName" class="form-select">
-                                            <option value="" selected disabled>
-                                                Select Panel Brand
-                                            </option>
-                                        </select>
-                                    </div>
-                                    <div class="mb-3 form-group">
-                                        <label for="InverterBrandId">
-                                            Inverter Brand:
-                                        </label>
-                                        <select name="InverterBrandId" id="InverterBrandName" class="form-select">
-                                            <option value="" selected disabled>
-                                                Select Inverter Brand
-                                            </option>
-                                        </select>
-                                    </div>
-                                </form>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary" id="PanelInverterCombinationModalSubmit">
-                                    Save
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="tableDiv">
-                <table id="inverterPanelCompatibiltyTable">
-                    <thead>
-                        <tr>
-                            <th>Inverter Brand</th>
-                            <th>Panel Brand</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody id="inverterPanelCompatibiltyTableBody"></tbody>
-                </table>
-            </div>
-        </div> -->
         <div class="tableContainer">
             <div class="heading">
                 <h4>Erection Commissioning Cost Table</h4>
@@ -514,41 +448,99 @@
             </div>
         </div>
     </section>
-    <section class="removed" id="modelAgreementGenerator">
+    <section class="removed" id="quotationGenerator">
         <div class="container">
             <div class="text-center">
-                <h3>Model Agreement Generator</h3>
+                <h3>Quotation Generator</h3>
             </div>
-            <form action="" id="modelAgreementForm">
+            <form action="" id="QuotationForm">
                 <div class="mb-3 form-group">
                     <label for="vendorSelect">Select Vendor: </label>
                     <select name="vendorSelect" id="vendorSelect" class="form-control form-select">
+                        <option value="" selected disabled> -- Select Vendor -- </option>
                         <option value="Mamta Enterprises">Mamta Enterprises</option>
                         <option value="ND Techno Solutions">ND Techno Solutions</option>
                     </select>
                 </div>
-                <div class="mb-3 form-group">
-                    <label for="customer_name">Customer Name: </label>
-                    <input type="text" name="customer_name" id="customer_name" class="form-control" required>
-                </div>
-                <div class="mb-3 form-group">
-                    <label for="customer_address">Customer Address: </label>
-                    <textarea name="customer_address" id="customer_address" class="form-control" required></textarea>
-                </div>
-                <!-- <div>
-                    <label for="signed">Make signed Agreement</label>
-                    <input type="checkbox" name="signed" id="signed" class="">
-                </div>
-                <div class="mb-3 form-group">
-                    <label for="customer_sign">Customer Signature: </label>
-                    <input type="file" name="customer_sign" id="customer_sign" class="form-control" disabled
-                        accept="image/*">
-                    <div id="file-actions" class="mt-2" style="display: none;">
-                        <button type="button" id="viewFile" class="btn btn-info me-2">View</button>
-                        <button type="button" id="deleteFile" class="btn btn-danger">Delete</button>
+                <div id="quotationFormBody" class="removed">
+                    <div class="form-group mb-3">
+                        <label for="customerName">Customer Name: </label>
+                        <input type="text" class="form-control" id="customerName" name="customerName" required/>
                     </div>
-                </div> -->
-                <button type="submit" class="btn btn-primary w-100">Generate Document</button>
+                    <div class="form-group mb-3">
+                        <label for="customerPhone">Customer Phone:</label>
+                        <input type="number" class="form-control" id="customerPhone" name="contactNo" required/>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="customerEmail">Customer Email: </label>
+                        <input type="text" class="form-control" id="customerEmail" name="contactEmail"
+                               placeholder="Enter customer name" value="solar.mamtaenterprises@gmail.com" required/>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="netCapacity">Proposed Capacity (KW): </label>
+                        <input type="number" class="form-control" name="netCapacity" id="netCapacity" required />
+                    </div>
+                    <div class="removed" id="ND-specific-fields">
+                        <div class="form-group mb-3">
+                            <label for="connectionType">Connection Type: </label>
+                            <select class="form-control form-select" id="connectionType" name="connectionType">
+                                <option value="Residential">Residential</option>
+                                <option value="Commercial">Commercial</option>
+                            </select>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="roofType">Roof Type:</label>
+                            <select name="roofType" id="roofType" class="form-control form-select">
+                                <option value="Ground Mounted">Ground Mounted</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="phase">Phase: </label>
+                            <select name="phase" id="phase" class="form-control form-select">
+                                <option value="Single Phase">Single Phase</option>
+                                <option value="Triple Phase">Triple Phase</option>
+                            </select>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="connectedLoad">Connected Load (KW) :</label>
+                            <input type="number" class="form-control" id="connectedLoad" name="connectedLoad" />
+                        </div>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="panelBrandName">Panel Brand:</label>
+                        <input type="text" class="form-control" name="panelBrandName" id="panelBrandName" required />
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="panelType">Panel Type: </label>
+                        <select class="form-control form-select" name="panelType" id="panelType" required>
+                            <option value="Mono-Cut">Mono - Cut</option>
+                            <option value="Bifacial">Bifacial</option>
+                            <option value="Topcon">TopCon</option>
+                        </select>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="givenPanelCapacity">Panel Capacity (W):</label>
+                        <input type="number" class="form-control" name="panelCapacity" id="givenPanelCapacity" required />
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="NoOfPanels">Number of Panels: </label>
+                        <input type="number" class="form-control" name="noOfPanels" id="NoOfPanels" required />
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="inverterBrandName">Inverter Brand:</label>
+                        <input type="text" class="form-control" id="inverterBrandName" name="inverterBrandName" required />
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="givenInverterCapacity">Inverter Capacity (KW) :</label>
+                        <input type="number" class="form-control" id="givenInverterCapacity" name="inverterCapacity" required />
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="netCostToConsumer">Net Cost: </label>
+                        <input type="number" class="form-control" name="netCost" id="netCostToConsumer" required />
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Generate Quotation</button>
+                </div>
             </form>
         </div>
     </section>
@@ -572,7 +564,7 @@
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="config/config.js"></script>
     <script src="scripts/docxGeneratorScript.js"></script>
-    <script src="scripts/modelAgreementGenerator.js"></script>
+    <script src="scripts/QuotationGenerator.js"></script>
     <script src="scripts/inverterTable.js"></script>
     <script src="scripts/panelTable.js"></script>
     <script src="scripts/erectionComissioning.js"></script>
