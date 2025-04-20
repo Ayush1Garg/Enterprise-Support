@@ -80,7 +80,7 @@ const previewFile = async (req, res) => {
 }
 
 const generateQuotation = async (req, res) => {
-    const vendorName = req.body.vendorName;
+    const vendorName = req.body.vendorSelect;
     if(vendorName == "Mamta Enterprises"){
         return await makeMamtaQuotation(req,res);
     }else if(vendorName == "ND Techno Solutions"){
@@ -112,7 +112,6 @@ const makeMamtaQuotation = async (req,res) => {
             panelBrand: panelBrandName, //
             panelType: panelType, //
             NoOfPanels: noOfPanels, //
-            roofType: roofType,
             netCapacity: netCapacity, //
             contactEmail: contactEmail, //
             contactNo: contactNo, //
