@@ -91,7 +91,44 @@ const generateQuotation = async (req, res) => {
 }
 
 const makeMamtaQuotation = async (req,res) => {
-    return res.status(200).send("Mamta Enterprises");
+    const {inverterCapacity, inverterBrandName, panelCapacity, panelBrandName, panelType,
+        noOfPanels, netCapacity, contactPerson, customerAddress,
+        netCost, contactEmail, contactNo, customerName, } = req.body;
+    const units = netCapacity*1350, baseCost = Math.floor(netCost/1.12), tax = netCost - baseCost;
+    const templatesDir = path.join(__dirname, '../templates');
+    const wordTemplate = "Mamta Enterprises Quotation.docx"
+    const templatePath = path.join(templatesDir, wordTemplate);
+    if (!fs.existsSync(templatePath)) {
+        return res.status(404).send("Template not found.");
+    }
+    fs.readFile(templatePath, 'binary', (err, data) => {
+        if (err) return res.status(500).send("Error reading template file.");
+        const zip = new PizZip(data);
+        const doc = new docxtemplater(zip);
+        doc.render({
+            inverterCapacity: inverterCapacity, //
+            inverterBrand: inverterBrandName, //
+            panelCapacity: panelCapacity, //
+            panelBrand: panelBrandName, //
+            panelType: panelType, //
+            NoOfPanels: noOfPanels, //
+            roofType: roofType,
+            netCapacity: netCapacity, //
+            contactEmail: contactEmail, //
+            contactNo: contactNo, //
+            customerName: customerName, //
+            netCost: netCost,
+            units: units, //
+            baseCost: baseCost, //
+            tax: tax,
+            customerAddress : customerAddress,
+            contactPerson : contactPerson == "" ? customerName : contactPerson
+        });
+        const docxPath = path.join(outputDir, wordTemplate);
+        fs.writeFileSync(docxPath, doc.getZip().generate({ type: 'nodebuffer' }));
+        res.setHeader("Content-Type", "application/json");
+        res.json({ previewLink: `/preview?file=${encodeURIComponent(wordTemplate)}&type=docx` });
+    });
 }
 
 const makeNDTechnoQuotation = async (req,res) => {
