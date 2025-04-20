@@ -38,7 +38,7 @@ quotationForm.onsubmit = async (e) => {
     document.getElementById('spinner').classList.remove('loading-spinner');
     fetch(`${CONFIG.BACKEND_URL}/generateQuotation`,{
         method: 'POST',
-        body: JSON.Stringify(quotationFormData),
+        body: JSON.stringify(quotationFormData),
         headers: {
             'Content-Type': 'application/json',
         }
