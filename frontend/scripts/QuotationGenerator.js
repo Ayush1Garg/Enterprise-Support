@@ -15,7 +15,7 @@ vendorSelect.addEventListener("change", function() {
             NDspecificFields.classList.remove("removed");
             MamtaSpecificFields.classList.add("removed");
         }else if(selected =="Mamta Enterprises"){
-            MamtaSpecificFields.classList.add("removed");
+            MamtaSpecificFields.classList.remove("removed");
             NDspecificFields.classList.add("removed");
         }else{
             NDspecificFields.classList.add("removed");
