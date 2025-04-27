@@ -92,7 +92,7 @@ const generateQuotation = async (req, res) => {
 
 const makeMamtaQuotation = async (req,res) => {
     const {inverterCapacity, inverterBrandName, panelCapacity, panelBrandName, panelType,
-        noOfPanels, netCapacity, contactPerson, customerAddress,
+        noOfPanels, netCapacity, contactPerson, givenCustomerAddress,
         netCost, contactEmail, contactNo, customerName, } = req.body;
     const units = netCapacity*1350, baseCost = Math.floor(netCost/1.12), tax = netCost - baseCost;
     const templatesDir = path.join(__dirname, '../templates');
@@ -120,7 +120,7 @@ const makeMamtaQuotation = async (req,res) => {
             units: units, //
             baseCost: baseCost, //
             tax: tax,
-            customerAddress : customerAddress,
+            customerAddress : giveCustomerAddress,
             contactPerson : contactPerson == "" ? customerName : contactPerson
         });
         const docxPath = path.join(outputDir, wordTemplate);
@@ -133,7 +133,7 @@ const makeMamtaQuotation = async (req,res) => {
 const makeNDTechnoQuotation = async (req,res) => {
     const {inverterCapacity, inverterBrandName, panelCapacity, panelBrandName, panelType,
         noOfPanels, connectionType, roofType, connectedLoad, netCapacity, phase,
-        netCost, contactEmail, contactNo, customerName, } = req.body;
+        netCost, contactEmail, contactNo, customerName, givenCustomerAddress } = req.body;
     const units = netCapacity*1350, baseCost = Math.floor(netCost/1.12), tax = netCost - baseCost;
     const templatesDir = path.join(__dirname, '../templates');
     const wordTemplate = "ND Techno Solutions Quotation.docx"
@@ -146,6 +146,7 @@ const makeNDTechnoQuotation = async (req,res) => {
         const zip = new PizZip(data);
         const doc = new docxtemplater(zip);
         doc.render({
+            customerAddress : givenCustomerAddress==undefined ? "Kaithal" : givenCustomerAddress,
             inverterCapacity: inverterCapacity, //
             inverterBrand: inverterBrandName, //
             panelCapacity: panelCapacity, //
