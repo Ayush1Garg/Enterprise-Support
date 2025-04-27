@@ -120,7 +120,7 @@ const makeMamtaQuotation = async (req,res) => {
             units: units, //
             baseCost: baseCost, //
             tax: tax,
-            customerAddress : giveCustomerAddress,
+            customerAddress : givenCustomerAddress,
             contactPerson : contactPerson == "" ? customerName : contactPerson
         });
         const docxPath = path.join(outputDir, wordTemplate);
