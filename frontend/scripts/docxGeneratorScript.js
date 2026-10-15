@@ -8,6 +8,20 @@ flatpickr("#invoice_date", {
     maxDate: new Date()
 });
 
+const vendorNameSelect = document.getElementById('vendorName');
+const includeWorkCompletion = document.getElementById('include_work_completion');
+
+function syncWorkCompletionCheckbox() {
+    const isMamta = vendorNameSelect.value === "Mamta Enterprises";
+    includeWorkCompletion.disabled = !isMamta;
+    if (!isMamta) {
+        includeWorkCompletion.checked = false;
+    }
+}
+
+vendorNameSelect.addEventListener('change', syncWorkCompletionCheckbox);
+syncWorkCompletionCheckbox();
+
 docxForm.addEventListener('submit', function (event) {
     event.preventDefault();
 

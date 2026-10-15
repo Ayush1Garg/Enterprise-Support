@@ -17,9 +17,12 @@ const generateFile = async (req, res) => {
     const {
         vendorName, inverter_capacity, inverter_brand, panel_capacity, panel_brand,
         invoice_date, invoice_number, consumer_name, consumer_address,
-        net_solar_capacity, no_of_panels, serial_numbers
+        net_solar_capacity, no_of_panels, serial_numbers, include_work_completion
     } = req.body;
-    const template = vendorName == "Mamta Enterprises" ? "MamtaEnterprises_Docs" : "NDTechnoSolutions_Docs";
+    let template = vendorName == "Mamta Enterprises" ? "MamtaEnterprises_Docs" : "NDTechnoSolutions_Docs";
+    if (vendorName == "Mamta Enterprises" && include_work_completion) {
+        template = "MamtaEnterprises_AllDocs";
+    }
     const wordTemplate = template + ".docx";
 
     const templatesDir = path.join(__dirname, '../templates');
